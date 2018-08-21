@@ -1,10 +1,9 @@
 #include <cstdint>
-#include <cstring>
 #include <memory>
 #include <string>
 
+#include <argon2.h>
 #include <nan.h>
-#include "../argon2/include/argon2.h"
 
 #ifndef _MSC_VER
 namespace {

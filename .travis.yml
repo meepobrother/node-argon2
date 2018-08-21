@@ -6,7 +6,10 @@ node_js:
 addons:
   apt:
     packages:
+      - libargon2-0-dev
       - lcov
+    sources:
+      - sourceline: 'ppa:angelsl/trusty-crypto-backports'
 env:
   - npm_config_debug=yes
 before_install: npm install -g node-gyp nyc
