@@ -8,6 +8,7 @@ node_js:
 os:
   - linux
   - osx
+  - windows
 addons:
   apt:
     packages:
@@ -17,11 +18,14 @@ env:
   - npm_config_debug=yes
 before_script: yarn lint
 after_success:
-  - nyc report --reporter=text-lcov > lcov-js.info
-  - lcov -c -d . --no-external -o lcov-cpp.info
-  - lcov -r lcov-cpp.info "*/node_modules/*" -o lcov-cpp.info
-  - lcov -a lcov-cpp.info -a lcov-js.info | coveralls
   - yarn test:ts
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+      yarn global add coveralls;
+      nyc report --reporter=text-lcov > lcov-js.info;
+      lcov -c -d . --no-external -o lcov-cpp.info;
+      lcov -r lcov-cpp.info "*/node_modules/*" -o lcov-cpp.info;
+      lcov -a lcov-cpp.info -a lcov-js.info | coveralls;
+    fi
 before_deploy:
   - ARCHIVE_NAME="${TRAVIS_TAG:-latest}-$TRAVIS_OS_NAME-`uname -m`.tar"
   - yarn prebuild

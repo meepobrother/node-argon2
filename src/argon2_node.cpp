@@ -130,7 +130,7 @@ Options extract_opts(const Object& opts)
 
 Value Hash(const CallbackInfo& info)
 {
-    assert(info.Length() == 4 and info[0].IsBuffer() and info[1].IsBuffer() and info[2].IsObject() and info[3].IsFunction());
+    assert(info.Length() == 4 && info[0].IsBuffer() && info[1].IsBuffer() && info[2].IsObject() && info[3].IsFunction());
 
     auto worker = new HashWorker{
         info[3].As<Function>(), from_buffer(info[0]), from_buffer(info[1]), extract_opts(info[2].As<Object>())
